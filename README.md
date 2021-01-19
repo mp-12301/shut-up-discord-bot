@@ -1,0 +1,1 @@
+# shut-up-discord-bot
