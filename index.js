@@ -8,7 +8,13 @@ const Discord = require("discord.js");
 // This is your client. Some people call it `bot`, some people call it `self`, 
 // some might call it `cootchie`. Either way, when you see `client.something`, or `bot.something`,
 // this is what we're refering to. Your client.
-const client = new Discord.Client();
+const client = new Discord.Client({
+  ws : {
+      intents: [
+        "GUILD_VOICE_STATES",
+      ]
+  }
+});
 
 // Here we load the config.json file that contains our token and our prefix values. 
 const config = require("./config.json");
@@ -59,16 +65,6 @@ client.on("message", async message => {
   
   // Let's go with a few common example commands! Feel free to delete or change those.
   
-  if(command === "say") {
-    // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
-    // To get the "message" itself we join the `args` back into a string with spaces: 
-    const sayMessage = args.join(" ");
-    // Then we delete the command message 
-    message.delete().catch(O_o=>{}); 
-    // And we get the bot to say the thing: 
-    message.channel.send(sayMessage);
-  }
-
   if (command === 'join') {
     connection = await message.member.voice.channel.join()
   }
