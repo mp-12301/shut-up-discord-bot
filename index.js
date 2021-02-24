@@ -11,6 +11,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client({
   ws : {
       intents: [
+        "GUILDS",
+        "GUILD_MESSAGES",
         "GUILD_VOICE_STATES",
       ]
   }
@@ -72,10 +74,10 @@ client.on("message", async message => {
 });
 
 client.on('guildMemberSpeaking', async (member, speaking) => {
-    const username = member?.user?.username
-    const isSpeaking = speaking?.bitfield
+    const username = member.user.username
+    const isSpeaking = speaking.bitfield
     
-    if (user_talking?.username === username) {
+    if (user_talking.username === username) {
       if (isSpeaking === 0) {
         const timeDifference = (+ new Date() - user_talking.lastTime) / 1000
 
@@ -89,7 +91,7 @@ client.on('guildMemberSpeaking', async (member, speaking) => {
       } else {
         user_talking.lastTime = + new Date()
 
-        if (user_talking?.count >= 10) {
+        if (user_talking.count >= 10) {
           connection.play('assets/shut-up-bitch.mp3', {volume: 1})
           user_talking.count = 0
         }
